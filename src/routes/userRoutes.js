@@ -177,16 +177,19 @@ router.post('/settingUpdate', async function (req, res) {
     await updateValue.save();
  //-----------------------Updating----User---Friend--list---if---necessary-----------------------------------
  const updateFriendList = await  userDetail.find({'friend.email':email})
- updateFriendList.forEach(updateFriend => {
-  updateFriend.friend.forEach(friend => {
-      if (friend.email === email) {
-          friend.name = updateName;
-          friend.image = fileImage;
+ updateFriendList.forEach(async (updateFriend) => {
+  updateFriend.friend.forEach((friend) => {
+    if (friend.email === email) {
+      friend.name = updateName;
+      if (fileImage) {
+        friend.image = fileImage;
       }
+    }
   });
+  await updateFriend.save(); // Save each friend individually
 });
   
-   await updateFriendList.save();
+   
 
 
  //---------------------For--Global---Update----------------------------------------------------------
