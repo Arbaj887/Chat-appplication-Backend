@@ -6,6 +6,8 @@ const userRoutes = require('./routes/userRoutes.js')
 const globalRoutes = require('./routes/globalRoutes.js')
 const messagesRoutes= require('./routes/messagesRoutes.js')
 const { Server} = require('socket.io')
+const {translateLanguage}= require('./translateFile/translateLanguage.js')
+const { translateText} = require('./translateFile/translateText.js')
 
 
 require('dotenv').config()
@@ -16,6 +18,7 @@ app.use(express.json())
 app.use(userRoutes)
 app.use(globalRoutes)
 app.use(messagesRoutes)
+
 
 //-------------------------------mongoDb ---connection-------------------------------------
 try{
@@ -54,8 +57,13 @@ io.on('connection',(socket)=>{
     
     socket.join(data.email);
    })
-   socket.on('send_message',(data)=>{
-    socket.to(data.email).emit('receive_message',data.msg);
+   socket.on('send_message',async (data)=>{
+
+    await translateLanguage(data.email)
+
+    await translateText(data.msg , translateLanguage)
+
+    socket.to(data.email).emit('receive_message', translateText);
     
    })
 
