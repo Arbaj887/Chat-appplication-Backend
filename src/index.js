@@ -7,7 +7,7 @@ const globalRoutes = require('./routes/globalRoutes.js')
 const messagesRoutes= require('./routes/messagesRoutes.js')
 const { Server} = require('socket.io')
 const {translateLanguage}= require('./translateFile/translateLanguage.js')
-const { translateText} = require('./translateFile/translateText.js')
+const { translateText} = require('./translateFile/translateText.js').default
 
 
 require('dotenv').config()
@@ -57,10 +57,10 @@ io.on('connection',(socket)=>{
     
     socket.join(data.email);
    })
+
    socket.on('send_message',async (data)=>{
 
     await translateLanguage(data.email)
-
     await translateText(data.msg , translateLanguage)
 
     socket.to(data.email).emit('receive_message', translateText);

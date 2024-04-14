@@ -1,5 +1,5 @@
-const {Translate} = require('translate')
-const fetch = require("node-fetch")
+import { Translate } from 'translate'
+import fetch from "node-fetch"
 
 
 async function translateText (text,translate_to){
@@ -15,5 +15,5 @@ async function translateText (text,translate_to){
     }
 
 }
-module.exports= translateText;
+export default translateText;
 
