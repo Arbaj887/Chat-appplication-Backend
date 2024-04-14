@@ -7,7 +7,7 @@ const globalRoutes = require('./routes/globalRoutes.js')
 const messagesRoutes= require('./routes/messagesRoutes.js')
 const { Server} = require('socket.io')
 const {translateLanguage}= require('./translateFile/translateLanguage.js')
-const { translateText} = require('./translateFile/translateText.js').default
+const { translateText} = require('./translateFile/translateText.js')
 
 
 require('dotenv').config()
