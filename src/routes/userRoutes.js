@@ -195,7 +195,10 @@ router.post('/settingUpdate', async function (req, res) {
  //---------------------For--Global---Update----------------------------------------------------------
      const updateGlobal = await globalUser.findOne({email:email}) 
           updateGlobal.name = updateName
-          updateGlobal.image = fileImage;
+          if(fileImage){
+            updateGlobal.image = fileImage;
+            }
+         
    
     await updateGlobal.save();
     return res.json(updateValue)
