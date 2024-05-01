@@ -27,7 +27,7 @@ const userSchema=new mongoose.Schema({
     },
     language:{
         type:String,
-        default:"English",
+        default:"en",
     },
     friend:[{
         image:{

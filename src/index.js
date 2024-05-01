@@ -6,8 +6,8 @@ const userRoutes = require('./routes/userRoutes.js')
 const globalRoutes = require('./routes/globalRoutes.js')
 const messagesRoutes= require('./routes/messagesRoutes.js')
 const { Server} = require('socket.io')
-const {translateLanguage}= require('./translateFile/translateLanguage.js')
-const { translateText} = require('./translateFile/translateText.js')
+const translateLanguage= require('./translateFile/translateLanguage.js')
+const translateText = require('./translateFile/translateText.js')
 
 
 require('dotenv').config()
@@ -43,13 +43,15 @@ const server= app.listen(process.env.PORT,()=>{
   
 })
 
-const io = new Server(server,{
+const io = new Server(server,
+  {
   cors:{
   origin:process.env.CORS,
   credentials:true
 
   }
-})
+}
+)
 io.on('connection',(socket)=>{
    console.log('hey user Connect',socket.id)
 
@@ -60,10 +62,10 @@ io.on('connection',(socket)=>{
 
    socket.on('send_message',async (data)=>{
 
-    await translateLanguage(data.email)
-    await translateText(data.msg , translateLanguage)
+    const translateLang= await translateLanguage(data.email)
+    const translateMsg = await translateText(data.msg , translateLang)
 
-    socket.to(data.email).emit('receive_message', translateText);
+   await socket.to(data.email).emit('receive_message', translateMsg);
     
    })
 

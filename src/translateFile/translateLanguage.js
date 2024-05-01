@@ -1,12 +1,12 @@
 const userDetail = require('../models/userDetail.model.js')
 
 
-async function translateLanguage(email){
+async function translateLanguage(email,){
 try{
-    const language = await userDetail.findOne({ email: email})
-
-    
-   return  (language.language)
+    const to = await userDetail.findOne({ email: email})
+     
+     
+   return  (to.language)
 
   } catch (err) {
      console.error("Error during translating:", err);
