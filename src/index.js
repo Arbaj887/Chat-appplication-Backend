@@ -46,14 +46,15 @@ const server= app.listen(process.env.PORT,()=>{
 const io = new Server(server,
   {
   cors:{
-  origin:process.env.CORS,
+  origin: process.env.CORS,
+  
   credentials:true
 
   }
 }
 )
 io.on('connection',(socket)=>{
-   
+  console.log(process.env.CORS)
 
    socket.on('join', function (data) {
     
