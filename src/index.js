@@ -19,29 +19,27 @@ app.use(userRoutes)
 app.use(globalRoutes)
 app.use(messagesRoutes)
 
+app.use(cors({
+  origin: process.env.CORS,
+  credentials:true
+}));
+
 
 //-------------------------------mongoDb ---connection-------------------------------------
 try{
-mongoose.connect(`${process.env.MONGODB_URL}`).then(()=>{
-  console.log("mongo connected")
-  
-})
+mongoose.connect(`${process.env.MONGODB_URL}`)
  
 
 }
 catch(err){
-  console.log('DataBase is not connected')
+  
 }
 
 
 
 
 
-const server= app.listen(process.env.PORT,()=>{
-  console.log("port listining",process.env.PORT)
-  
-  
-})
+const server= app.listen(process.env.PORT)
 
 const io = new Server(server,
   {
@@ -54,7 +52,7 @@ const io = new Server(server,
 }
 )
 io.on('connection',(socket)=>{
-  console.log(process.env.CORS)
+  
 
    socket.on('join', function (data) {
     
