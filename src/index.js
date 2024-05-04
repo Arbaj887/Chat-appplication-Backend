@@ -12,6 +12,10 @@ const translateText = require('./translateFile/translateText.js')
 
 require('dotenv').config()
 
+app.use(cors({
+  origin: process.env.CORS,
+  credentials:true
+}));
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
@@ -19,10 +23,7 @@ app.use(userRoutes)
 app.use(globalRoutes)
 app.use(messagesRoutes)
 
-app.use(cors({
-  origin: process.env.CORS,
-  credentials:true
-}));
+
 
 
 //-------------------------------mongoDb ---connection-------------------------------------
