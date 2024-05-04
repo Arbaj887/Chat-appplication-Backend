@@ -53,7 +53,7 @@ const io = new Server(server,
 }
 )
 io.on('connection',(socket)=>{
-   console.log('hey user Connect',socket.id)
+   
 
    socket.on('join', function (data) {
     

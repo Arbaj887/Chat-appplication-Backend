@@ -153,7 +153,7 @@ router.post('/Setting', async function (req, res) {
     return res.json(currentValue)
   }
   catch (err) {
-    console.log('err')
+    console.log(err)
   }
 })
 
@@ -161,20 +161,23 @@ router.post('/Setting', async function (req, res) {
 
 router.post('/settingUpdate', async function (req, res) {
   const { email, fileImage, updateName, updatePhone, updatePassword, updateLanguage } = req.body
- 
+
    
   try {
     const updateValue = await userDetail.findOne({ email: email })
    
     updateValue.name = updateName;
+   
     if(fileImage){
     updateValue.image = fileImage;
+    
     }
     updateValue.phone_number = updatePhone;
     updateValue.password = updatePassword;
     updateValue.language = updateLanguage;
 
     await updateValue.save();
+    
  //-----------------------Updating----User---Friend--list---if---necessary-----------------------------------
  const updateFriendList = await  userDetail.find({'friend.email':email})
  updateFriendList.forEach(async (updateFriend) => {
@@ -183,6 +186,7 @@ router.post('/settingUpdate', async function (req, res) {
       friend.name = updateName;
       if (fileImage) {
         friend.image = fileImage;
+       
       }
     }
   });
@@ -195,8 +199,9 @@ router.post('/settingUpdate', async function (req, res) {
  //---------------------For--Global---Update----------------------------------------------------------
      const updateGlobal = await globalUser.findOne({email:email}) 
           updateGlobal.name = updateName
-          if(fileImage){
+          if(fileImage ){
             updateGlobal.image = fileImage;
+          
             }
          
    
@@ -204,7 +209,9 @@ router.post('/settingUpdate', async function (req, res) {
     return res.json(updateValue)
   }
   catch (err) {
+
     console.log(err)
+    return res.status(401).json({ error: "unable to add image reUpdate" });
   }
 })
 //----------------------------------Send-----Friend--Request------------------------------------------------------
