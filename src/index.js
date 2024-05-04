@@ -12,7 +12,7 @@ const translateText = require('./translateFile/translateText.js')
 
 require('dotenv').config()
 
-app.use(cors())
+
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(userRoutes)
@@ -39,7 +39,7 @@ catch(err){
 
 
 
-const server= app.listen(process.env.PORT)
+const server= app.listen(process.env.PORT || 4000)
 
 const io = new Server(server,
   {
@@ -49,10 +49,11 @@ const io = new Server(server,
   credentials:true
 
   }
+ 
 }
 )
 io.on('connection',(socket)=>{
-  
+ 
 
    socket.on('join', function (data) {
     
